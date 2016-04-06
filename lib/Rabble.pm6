@@ -6,12 +6,12 @@ use Rabble::Compiler;
 
 has @.stack;
 
-has %.lexicon;
-has Rabble::Reader $.reader;
-has Rabble::Compiler $.compiler;
+has %!lexicon;
+has Rabble::Reader $!reader;
+has Rabble::Compiler $!compiler;
 
-has IO::Handle $!in;
-has IO::Handle $!out;
+has IO::Handle $.in;
+has IO::Handle $.out;
 
 submethod BUILD(:$!in = $*IN, :$!out = $*OUT) {
   $!reader .= new :in($!in);
@@ -39,58 +39,18 @@ submethod BUILD(:$!in = $*IN, :$!out = $*OUT) {
   %!lexicon.alias('.', 'dot');
   %!lexicon.alias('.S', 'dot-s');
 
-  # %!lexicon.define :name(':')   :block({ self.read-and-define-word });
-  # %!lexicon.define :name('[')   :block({ read_quotation });
   %!lexicon.define :name('bye') :block({ exit });
-  # %!lexicon.define :name('\\')  :block({ $!in.readline }) :immediate;
 }
-
-=begin OLD_WAYS
-method evaluate {
-  my %entry = self.resolve-word($_);
-
-  with %entry { %entry<block>() }
-  else { $!out.say: "$_ ??" }
-}
-
-method resolve-word(Str $word) {
-  return $_ with %!lexicon{$word};
-  my $x;
-  given $word {
-    when /^<:Letter>/ { $x = ~$word }
-    when /^<:Number>/ { $x = +$word }
-  }
-  with $x {
-    return {
-      name      => $word,
-      block     => { @!stack.push: $x },
-      immediate => False
-    }
-  }
-}
-
-method read-and-define-word {
-  my $name = $!reader.read;
-  my @words;
-  while (my $word = $!reader.read) {
-    last if $word eq ';';
-    @words.push: $word;
-  }
-  my $p = $!compiler.compile-words(self, |@words);
-  %!lexicon.define-word :name($name), :block($p);
-}
-
-method read_quotation {
-  my @words;
-  while (my $word = $!reader.read) {
-    last if $word eq ']';
-    @words.push: $word;
-  }
-  @!stack.push: $!compiler.compile-words(self, |@words);
-}
-=end OLD_WAYS
 
 method run(Str $code) {
   $!reader.parse($code, :actions($!compiler));
-  $_<block>() for @!stack;
+
+  # for @!stack -> $expr {
+  #   if $*DEBUG {
+  #     say 'Stack';
+  #     for @!stack -> $elem { dd $elem }
+  #   }
+  #   $expr<block>()
+  # }
+
 }

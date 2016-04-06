@@ -1,6 +1,6 @@
 unit class Rabble::Lexicon does Associative;
 
-has %!entries;
+has Map %!entries;
 has $!context;
 
 submethod BUILD(:$!context, :@modules) {
@@ -10,13 +10,18 @@ submethod BUILD(:$!context, :@modules) {
 }
 
 method AT-KEY($name) { %!entries{$name} }
+method elems { %!entries.elems }
 
-multi method define(Str :$name!, Code :&block!) {
-  %!entries{$name} = { name => $name, block => &block, immediate => False }
+multi method define(:$name, :&block) {
+  %!entries{$name} = {
+    name => $name, block => &block, immediate => False
+  }
 }
 
-multi method define(Str :$name!, Code :&block!, :$immediate!) {
-  %!entries{$name} = { name => $name, block => &block, immediate => True }
+multi method define(:$name, :&block, :$immediate) {
+  %!entries{$name} = {
+    name => $name, block => &block, immediate => True
+  }
 }
 
 method alias($name, $old-name) {
@@ -27,7 +32,10 @@ method alias($name, $old-name) {
 }
 
 method import-words-from($ctx, \wordmod) {
-  for wordmod::EXPORT::DEFAULT::.kv -> $name, $sub {
-    self.define-word($name, $sub.assuming($ctx));
+  my \exports = ::wordmod::('EXPORT::DEFAULT');
+  for exports::.kv -> $name, &sub {
+    self.define:
+      name  => $name.substr(1),
+      block => &sub.assuming($ctx);
   }
 }

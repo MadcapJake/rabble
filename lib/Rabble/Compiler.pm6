@@ -3,9 +3,11 @@ unit class Rabble::Compiler;
 has $!context;
 has %!lexicon;
 
-submethod BUILD(:$!context, :%!lexicon) {}
+submethod BUILD(:$!context, :%lexicon) {
+  %!lexicon := %lexicon;
+}
 
-method compile-words(@entries) {
+sub compile-words(@entries) {
   my Callable @actions;
   for @entries -> %entry {
     %entry<immediate>
@@ -15,24 +17,32 @@ method compile-words(@entries) {
   { $_() for @actions }
 }
 
-
-method Name($/) { $/.make: ~$/ }
-method Number($/) { $/.make: +$/ }
-method Word($/) {
-  $/.make: %!lexicon{~$/} // {
+method Name($/) { $/.make: %!lexicon{~$/} // die "Unable to find $/" }
+method Number($/) {
+  $/.make: {
     name      => ~$/,
-    block     => { $!context.stack.push: $/ },
+    block     => { $!context.stack.push: +$/ },
     immediate => False
   }
 }
+method Word($/) {
+  say "Word: $/" if $*DEBUG;
+  $/.make: $<Name>.made // $<Number>.made;
+}
 method Interpretation($/) {
-  $/.make: self.compile-words($<Expression>».made)
+  $/.make: compile-words($<Expression>».made)
 }
 method Definition($/) {
-  my $block = self.compile-words($<Expression>».made);
+  my $block = compile-words($<Expression>».made);
   %!lexicon.define-word :name($<Name>) :$block;
 }
 method Expression($/) {
-  $/.make: $<Word>.made // $<Interpretation>.made;
+  my %expr = $<Word>.made // $<Interpretation>.made;
+  %expr<block>();
 }
-method Line($/) { $!context.stack.append: $<Expression>».made }
+=for UNUSED
+method Line($/) {
+  my @exprs = $<Expression>».made;
+  if $*DEBUG { .say for @exprs }
+  $!context.stack.append: @exprs;
+}
