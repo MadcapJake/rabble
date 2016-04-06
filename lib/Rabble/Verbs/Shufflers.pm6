@@ -15,10 +15,10 @@ sub swap($ctx) is export {
   $ctx.stack.append: $ctx.stack.pop xx 2;
 }
 
-#| [a b c -- b c a]
+#| [x y z -- y z x]
 sub rot($ctx) is export {
-  my ($a, $b, $c) = ($ctx.stack.pop, $ctx.stack.pop, $ctx.stack.pop);
-  $ctx.stack.append: [$b, $c, $a];
+  my ($z, $y, $x) = ($ctx.stack.pop xx 3);
+  $ctx.stack.append: [$y, $z, $x];
 }
 
 sub und($ctx) is export {

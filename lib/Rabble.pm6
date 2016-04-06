@@ -42,15 +42,4 @@ submethod BUILD(:$!in = $*IN, :$!out = $*OUT) {
   %!lexicon.define :name('bye') :block({ exit });
 }
 
-method run(Str $code) {
-  $!reader.parse($code, :actions($!compiler));
-
-  # for @!stack -> $expr {
-  #   if $*DEBUG {
-  #     say 'Stack';
-  #     for @!stack -> $elem { dd $elem }
-  #   }
-  #   $expr<block>()
-  # }
-
-}
+method run(Str $code) { $!reader.parse($code, :actions($!compiler)) }

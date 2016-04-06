@@ -40,9 +40,3 @@ method Expression($/) {
   my %expr = $<Word>.made // $<Interpretation>.made;
   %expr<block>();
 }
-=for UNUSED
-method Line($/) {
-  my @exprs = $<Expression>».made;
-  if $*DEBUG { .say for @exprs }
-  $!context.stack.append: @exprs;
-}
