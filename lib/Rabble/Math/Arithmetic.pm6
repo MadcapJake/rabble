@@ -10,10 +10,10 @@ sub multiply($ctx) is export {
   $ctx.stack.push: ($ctx.stack.pop * $ctx.stack.pop);
 }
 
-#| [r l -- m]
+#| [x y -- z]
 sub subtract($ctx) is export {
-  my ($left, $right) = ($ctx.stack.pop, $ctx.stack.pop);
-  $ctx.stack.push: ($left - $right);
+  my ($y, $x) = ($ctx.stack.pop, $ctx.stack.pop);
+  $ctx.stack.push: ($x - $y);
 }
 
 #| [d n -- q]
