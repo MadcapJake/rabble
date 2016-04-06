@@ -12,14 +12,14 @@ sub multiply($ctx) is export {
 
 #| [x y -- z]
 sub subtract($ctx) is export {
-  my ($y, $x) = ($ctx.stack.pop, $ctx.stack.pop);
-  $ctx.stack.push: ($x - $y);
+  my ($y, $x) = ($ctx.stack.pop xx 2);
+  $ctx.stack.push: $x - $y;
 }
 
 #| [d n -- q]
 sub divide($ctx) is export {
-  my ($numerator, $denominator) = ($ctx.stack.pop, $ctx.stack.pop);
-  $ctx.stack.push: ($numerator / $denominator);
+  my ($d, $n) = ($ctx.stack.pop xx 2);
+  $ctx.stack.push: $n / $d;
 }
 
 #| [a -- b]

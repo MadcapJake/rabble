@@ -12,7 +12,7 @@ sub dup($ctx) is export {
 
 #| [a b -- b a]
 sub swap($ctx) is export {
-  $ctx.stack.append: [$ctx.stack.pop, $ctx.stack.pop];
+  $ctx.stack.append: $ctx.stack.pop xx 2;
 }
 
 #| [a b c -- b c a]
@@ -22,6 +22,6 @@ sub rot($ctx) is export {
 }
 
 sub und($ctx) is export {
-  my ($top, $und) = ($ctx.stack.pop, $ctx.stack.pop);
+  my ($top, $und) = ($ctx.stack.pop xx 2);
   $ctx.stack.append: [$und, $top, $und];
 }
