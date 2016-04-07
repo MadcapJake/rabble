@@ -14,19 +14,25 @@ method elems { %!entries.elems }
 
 multi method define(:$name, :&block) {
   %!entries{$name} = {
-    name => $name, block => &block, immediate => False
+    name      => $name,
+    block     => &block,
+    immediate => False,
+    quotation => False
   }
 }
 
 multi method define(:$name, :&block, :$immediate) {
   %!entries{$name} = {
-    name => $name, block => &block, immediate => True
+    name      => $name,
+    block     => &block,
+    immediate => True,
+    quotation => False
   }
 }
 
 method alias($name, $old-name) {
+  die "No such word «$old-name»" without self{$old-name};
   my %entry = self{$old-name};
-  die "No such word $old-name" without %entry;
   my %new-entry = %entry.clone :$name;
   %!entries{$name} = %new-entry;
 }
