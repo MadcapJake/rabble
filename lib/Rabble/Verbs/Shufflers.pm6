@@ -1,5 +1,7 @@
 unit module Rabble::Verbs::Shufflers;
 
+use Rabble::Util;
+
 #| [a -- ]
 sub drop($ctx) is export {
   $ctx.stack.pop;
@@ -7,7 +9,7 @@ sub drop($ctx) is export {
 
 #| [a -- a a]
 sub dup($ctx) is export {
-  $ctx.stack.push: $ctx.stack[*-1];
+  $ctx.stack ↞ $ctx.stack[*-1]
 }
 
 #| [a b -- b a]
