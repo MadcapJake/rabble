@@ -10,13 +10,14 @@ rabble [--expression|-e] [--debug|-d] <expr>
 ```
 
 ### Examples
-```Forth
+```
+\\ Multipy
 5 2 * . \\= 10
-```
-```Forth
+
+\\ Dip below last value to apply quotation
 5 10 2 [ * ] dip .S \\= [50 2]>
-```
-```Forth
+
+\\ Apply quotation
 7 6 [2 3 + + +] apply . \\= 18
 ```
 
