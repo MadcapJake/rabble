@@ -37,3 +37,7 @@ Supports some basic words, anonymous blocks, and named functions.
 * Debugger
 * REPL
 * Documentation
+
+## Credits
+
+Thanks to Michael Fogus's [Read-Eval-Print-λove v003](https://leanpub.com/readevalprintlove003) and [rforth](https://github.com/ananthrk/rforth) for inspiration and guidance in learning Forth and stack-oriented programming.
