@@ -1,4 +1,4 @@
-unit class Rabble;
+unit class Rabble:auth<Jake Russo>:ver<0.1.0>;
 
 use Rabble::Lexicon;
 use Rabble::Reader;
@@ -22,7 +22,8 @@ submethod BUILD(:$!in = $*IN, :$!out = $*OUT) {
       (require Rabble::Verbs::StackOps),
       (require Rabble::Verbs::IO),
       (require Rabble::Math::Arithmetic),
-      (require Rabble::Verbs::Comparators)
+      (require Rabble::Verbs::Comparators),
+      (require Rabble::Verbs::Combinators)
     ]
   );
   $!compiler .= new :context(self) :lexicon(%!lexicon);
@@ -31,10 +32,10 @@ submethod BUILD(:$!in = $*IN, :$!out = $*OUT) {
   %!lexicon.alias('-', 'subtract');
   %!lexicon.alias('/', 'divide');
 
-  %!lexicon.alias('=', 'equal');
-  %!lexicon.alias('<>', 'not-equal');
-  %!lexicon.alias('>', 'greater-than');
-  %!lexicon.alias('<', 'less-than');
+  %!lexicon.alias('=', 'eq');
+  %!lexicon.alias('<>', 'noteq');
+  %!lexicon.alias('>', 'gt');
+  %!lexicon.alias('<', 'lt');
 
   %!lexicon.alias('.', 'dot');
   %!lexicon.alias('.S', 'dot-s');
