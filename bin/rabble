@@ -3,6 +3,18 @@ use v6.c;
 use lib 'lib';
 use Rabble;
 
+subset File of Str where {
+  $_.IO.f or die "File $_ does not exist"
+}
+subset RabbleFile of File where {
+  $_.IO.extension eq 'rbl' or die "File $_ is not a Rabble file"
+}
+multi sub MAIN(RabbleFile $file, Bool :debug(:$d)) {
+  my $*DEBUG = $d.so;
+  my Rabble $rabble .= new;
+  $rabble.run(slurp $file)
+}
+
 multi sub MAIN(Str $expr, Bool :expression(:$e), Bool :debug(:$d)) {
   my $*DEBUG = $d.so;
   my Rabble $rabble .= new;
