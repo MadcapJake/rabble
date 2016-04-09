@@ -12,7 +12,7 @@ my Output $out .= new;
 
 $_ = Rabble.new(:$out);
 
-plan 5;
+plan 7;
 
 .run: '5 2 + .';
 is $out.said, "7", 'addition';
@@ -28,3 +28,9 @@ is $out.said, '5', 'division';
 
 .run: '-10 abs .';
 is $out.said, '10', 'absolute';
+
+.run: '1 inc .';
+is $out.said, '2', 'inc';
+
+.run: '1 dec .';
+is $out.said, '0', 'dec';
