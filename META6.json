@@ -1,6 +1,6 @@
 {
   "name"        : "Rabble",
-  "version"     : "0.2.0",
+  "version"     : "0.3.1",
   "description" : "A Forth written in Perl 6",
   "source-url"  : "git://github.com/madcapjake/rabble.git",
   "authors"     : ["Jake Russo <madcap.russo+rabble@gmail.com>"],

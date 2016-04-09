@@ -1,4 +1,4 @@
-unit class Rabble:auth<Jake Russo>:ver<0.2.0>;
+unit class Rabble:auth<Jake Russo>:ver<0.3.1>;
 
 use Rabble::Lexicon;
 use Rabble::Reader;
