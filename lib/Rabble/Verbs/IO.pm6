@@ -5,5 +5,5 @@ sub emit($ctx) is export {
 }
 
 sub dot-s($ctx) is export {
-  $ctx.out.say: "{$ctx.stack}>"
+  $ctx.out.say: "⊣ {$ctx.stack} ⊢"
 }
