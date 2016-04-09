@@ -1,12 +1,13 @@
 unit grammar Rabble::Reader;
 
 token TOP           { [ <Line> \n+ ]+ }
-token Line          { [ <Expression> \s* ]+ <EOLComment>? }
-token Expression    { <Word> | <Quotation> | <Definition> }
-token Word          { <Name> | <Number> }
-token Name          { <:Letter+:Punctuation+:Symbol-[\[\]:;\\()]>+ }
+token Line          { \s* [ <Expression> \s* ]+ <EOLComment>? }
+token Expression    { <Word> | <Number> | <Quotation> | <Definition> }
+regex Term          { <:Letter+:Punctuation+:Symbol-[\[\]:;\\()]>+ }
+token Word          { <Term> }
+token Name          { <Term> }
 token Number        { <:Number>+ [ '.' <:Number>+ ]? }
 token Quotation     { '[' \s* [ <Expression> | <InlineComment> | \s ]+ \s* ']' }
-token Definition    { ':' <Name> [ <Expression> | <InlineComment> ]+ ';' }
+token Definition    { ':' \s* <Name> \s+ [ [<Expression> | <InlineComment>] \s+ ]+ \s* ';' }
 token EOLComment    { '\\' .* }
 token InlineComment { '(' <-[)]>* ')' }

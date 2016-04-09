@@ -40,7 +40,7 @@ submethod BUILD(:$!in = $*IN, :$!out = $*OUT) {
   %!lexicon.alias('.', 'dot');
   %!lexicon.alias('.S', 'dot-s');
 
-  %!lexicon.define :name('bye') :block({ exit });
+  %!lexicon.define :name('bye') :block(&exit);
 }
 
 method run(Str $code) { $!reader.parse($code, :actions($!compiler)) }

@@ -6,12 +6,12 @@ sub infix:<↞>(Array $stack, $item) is export is looser(&infix:<X>){
 }
 
 #| Internal workings for Quotations and Definitions
-sub compile-words(Map @entries) is export {
+sub compile-words(@entries) is export {
   my Callable @actions;
   for @entries -> %entry {
     %entry<immediate>
       ?? %entry<block>()
       !! @actions.push: %entry<block>;
   }
-  return { $_() for @actions }
+  return anon sub { $_() for @actions }
 }
