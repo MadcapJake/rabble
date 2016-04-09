@@ -27,7 +27,7 @@ method Number($/) {
 }
 method Word($/) {
   say "Rabble::Compiler::Word: \t$/" if $*DEBUG;
-  $/.make: %!lexicon{~$/} // die "Unable to find $/"
+  $/.make: %!lexicon{~$/} // die "Unable to find '$/'"
 }
 method Quotation($/) {
   say "Rabble::Compiler::Quotation:\t$/" if $*DEBUG;
