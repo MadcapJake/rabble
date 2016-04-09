@@ -28,15 +28,13 @@ To build a decently well-featured Forth in Perl 6, learn more about Perl 6 and F
 
 ### Status
 
-Supports some basic words, anonymous blocks, and named functions.
+A good chunk of builtins, a REPL, and some tests have been added.  Lots more words to be added but already pretty fun to fiddle with!
 
 ### Upcoming
 
-* Add more words
+* Add (even) more words
 * Implement a return stack
-* Tests
 * Debugger
-* REPL
 * Documentation
 
 ## Credits
