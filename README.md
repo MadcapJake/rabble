@@ -7,7 +7,7 @@ An implementation of a Forth-like language in Perl 6.
 ```
 rabble --expression|-e [--debug|-d] <expr>
 rabble [--debug|-d] <file>
-rabble [--repl|-r]
+rabble --repl|-r
 ```
 
 ### Examples

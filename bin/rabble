@@ -17,7 +17,7 @@ multi sub MAIN(Str $file, Bool :debug(:$d)) {
   $rabble.run(slurp $file)
 }
 
-multi sub MAIN(Bool :repl(:$r)) {
+multi sub MAIN(Bool :repl(:$r)!) {
   say "Rabble {Rabble.^ver} REPL";
   say "[$*PERL on $*VM] on $*KERNEL $*DISTRO";
   my Rabble $rabble .= new; my Str $expr;
