@@ -16,3 +16,10 @@ multi sub MAIN(Str $file, Bool :debug(:$d)) {
   my Rabble $rabble .= new;
   $rabble.run(slurp $file)
 }
+
+multi sub MAIN(Bool :repl(:$r)) {
+  say "Rabble {Rabble.^ver} REPL";
+  say "[$*PERL on $*VM] on $*KERNEL $*DISTRO";
+  my Rabble $rabble .= new; my Str $expr;
+  while ($expr = prompt("» ")) { $rabble.run: $expr }
+}
