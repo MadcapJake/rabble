@@ -31,6 +31,8 @@ submethod BUILD(:$!in = $*IN, :$!out = $*OUT) {
   %!lexicon.alias('*', 'multiply');
   %!lexicon.alias('-', 'subtract');
   %!lexicon.alias('/', 'divide');
+  %!lexicon.alias('%', 'modulo');
+  %!lexicon.alias('/%', 'ratdiv');
 
   %!lexicon.alias('=', 'eq');
   %!lexicon.alias('<>', 'noteq');

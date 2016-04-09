@@ -14,14 +14,22 @@ sub multiply($ctx) is export {
 
 #| [x y -- z]
 sub subtract($ctx) is export {
-  my ($y, $x) = ($ctx.stack.pop xx 2);
-  $ctx.stack ↞ $x - $y;
+  $ctx.stack ↞ $ctx.stack.pop - ENTER $ctx.stack.pop
 }
 
 #| [d n -- q]
 sub divide($ctx) is export {
-  my ($d, $n) = ($ctx.stack.pop xx 2);
-  $ctx.stack ↞ $n / $d;
+  $ctx.stack ↞ $ctx.stack.pop / ENTER $ctx.stack.pop
+}
+
+#| [x y -- rem]
+sub modulo($ctx) is export {
+  $ctx.stack ↞ $ctx.stack.pop % ENTER $ctx.stack.pop
+}
+
+#| [x y -- rem quot]
+sub ratdiv($ctx) is export {
+  $ctx.stack.append: ([R/] $ctx.stack.pop xx 2).nude
 }
 
 #| [a -- b]
