@@ -12,7 +12,7 @@ my Output $out .= new;
 
 $_ = Rabble.new(:$out);
 
-plan 6;
+plan 7;
 
 .run: '1 2 drop drop .S';
 is $out.said, '⊣  ⊢', 'drop removes elems on the stack';
@@ -35,3 +35,7 @@ is $out.said, '⊣ 2 3 1 ⊢', 'rot swaps the first to be last of three';
 
 .run: '1 2 und .S';
 is $out.said, '⊣ 1 2 1 ⊢', 'und takes one under and dups it on top';
+.run: 'drop drop drop';
+
+.run: '1 2 tuck .S';
+is $out.said, '⊣ 2 1 2 ⊢', 'tuck takes top of stack and places under second-to-last';
