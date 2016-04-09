@@ -7,6 +7,12 @@ sub drop($ctx) is export {
   $ctx.stack.pop;
 }
 
+#| [a b -- b]
+sub nip($ctx) is export {
+  my @stash = $ctx.stack.pop xx 2;
+  $ctx.stack ↞ @stash.first;
+}
+
 #| [a -- a a]
 sub dup($ctx) is export {
   $ctx.stack ↞ $ctx.stack[*-1]
